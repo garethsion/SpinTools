@@ -1,3 +1,6 @@
 - [x] 2019-10-13 - Replace SpinSystems class with json - import json in the relevant class
 - [ ] 2019-10-13 - Add code for clock transitions - high field and low field selection rules
 - [ ] 2019-10-13 - Add code for calculating populations
+- [ ] 2019-10-13 - Implement logging for each method
+- [ ] 2019-10-13 - Add appropriate docstrings for each method
+- [ ] 2019-10-13 - Add unit tests for each method
