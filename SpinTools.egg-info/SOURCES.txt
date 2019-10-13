@@ -12,4 +12,3 @@ SpinTools/qmech/__init__.py
 SpinTools/qmech/qmech.py
 SpinTools/spinhamiltonian/__init__.py
 SpinTools/spinhamiltonian/spinhamiltonian.py
-SpinTools/spinhamiltonian/spinsystems.py

@@ -9,3 +9,10 @@ class TestConstructor(unittest.TestCase):
         self.assertRaises(TypeError, sh.SpinHamiltonian,1j)
         self.assertRaises(TypeError, sh.SpinHamiltonian, True)
         self.assertRaises(TypeError, sh.SpinHamiltonian, None) 
+
+class TestElectronZeeman(unittest.TestCase):
+	def test_types(self):
+		self.assertRaises(TypeError,sh.SpinHamiltonian("Bi").electron_zeeman,"s")
+		self.assertRaises(TypeError,sh.SpinHamiltonian("Bi").electron_zeeman,True)
+		self.assertRaises(TypeError,sh.SpinHamiltonian("Bi").electron_zeeman,None)
+		return

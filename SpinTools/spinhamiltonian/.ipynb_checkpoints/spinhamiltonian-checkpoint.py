@@ -37,7 +37,7 @@ class SpinHamiltonian:
         if type(B) not in [list]:
             raise TypeError("B must be a vector")
         
-        if type(B.any()) not in [int,float]:
+        if type(B).any() not in [int,float]:
             raise TypeError("B components must be a float or integer value")
             
         S = self.__qm.angular_momentum(self.__ss['J'])
@@ -52,7 +52,7 @@ class SpinHamiltonian:
         if type(B) not in [list]:
             raise TypeError("B must be a vector")
         
-        if type(B.any()) not in [int,float]:
+        if type(B).any() not in [int,float]:
             raise TypeError("B components must be a float or integer value")
             
         I = self.__qm.angular_momentum(self.__ss['I'])
@@ -73,21 +73,21 @@ class SpinHamiltonian:
         if type(B) not in [list]:
             raise TypeError("B must be a vector")
         
-        if type(B.any()) not in [int,float]:
+        if type(B).any() not in [int,float]:
             raise TypeError("B components must be a float or integer value")
             
         return self.hyperfine() + self.electron_zeeman(B) + self.nuclear_zeeman(B)
 
     def get_field_vector(self,bx,by,bz):
         """Get field vector [bx, by, bz]"""       
-        if (type(bx) not in [int,float]) or (type(by) not in [int,float]) or (type(bz) not in [int,float]):
+        if type(bx) not in [int,float] or if type(by) not in [int,float] or if type(bz) not in [int,float]:
             raise TypeError("B components must be a float or integer value")
             
         return [bx, by, bz]
 
     def get_field_sweep(self,bmin=0,bmax=1,bnum=1000):
         """Sweep a field along one axis"""
-        if (type(bmin) not in [int,float]) or (type(bmax) not in [int,float]):
+        if type(bmin) not in [int,float] or if type(bmax) not in [int,float]:
             raise TypeError("B components must be a float or integer value")
         if type(bnum) not in [int]:
             raise TypeError("B iterator must be an integer value")
