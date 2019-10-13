@@ -4,3 +4,4 @@
 - [ ] 2019-10-13 - Implement logging for each method
 - [ ] 2019-10-13 - Add appropriate docstrings for each method
 - [ ] 2019-10-13 - Add unit tests for each method
+- [ ] 2019-10-13 - Clean up files

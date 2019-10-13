@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from SpinTools.qmech import qmechs
+from SpinTools.qmech import qmech
 
 class TestAngularMomentum(unittest.TestCase):
     def test_area(self):
