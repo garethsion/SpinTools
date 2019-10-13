@@ -1,7 +1,8 @@
 from scipy.constants import physical_constants as spc
 from SpinTools.qmech import qmech as qm
-from SpinTools.spinhamiltonian import spinsystems as ss
+# from SpinTools.spinhamiltonian import spinsystems as ss
 import numpy as np
+import json
 
 class SpinHamiltonian:
     def __init__(self,species):
@@ -9,37 +10,42 @@ class SpinHamiltonian:
         self.__un = spc["nuclear magneton"][0]
         self.__h = spc["Planck constant"][0]
         
-        spinsystem = ss.SpinSystems()
-        self.__ss = spinsystem.systems(species)
+        # spinsystem = ss.SpinSystems()
+        # self.__ss = spinsystem.systems(species)
+        with open('../../species.json', 'r') as f:
+            species_string = f.read()
         
-        self.__MJ = int((self.__ss.J*2)+1)
-        self.__MI = int((self.__ss.I*2)+1)
+        sp = json.loads(species_string)
+        self.__ss = sp[species]
+        
+        self.__MJ = int((self.__ss['J']*2)+1)
+        self.__MI = int((self.__ss['I']*2)+1)
         
         self.__qm = qm.Qmech()
         return
     
     def electron_zeeman(self,B):
         """Electron Zeeman interaction"""
-        S = self.__qm.angular_momentum(self.__ss.J)
+        S = self.__qm.angular_momentum(self.__ss['J'])
         Sx,Sy,Sz = (self.__qm.enlarge_matrix(self.__MI,S['x']),
                          self.__qm.enlarge_matrix(self.__MI,S['y']),
                          self.__qm.enlarge_matrix(self.__MI,S['z']))
 
-        return self.__ub*self.__ss.gS*(Sx*B[0]+Sy*B[1]+Sz*B[2])
+        return self.__ub*self.__ss['gS']*(Sx*B[0]+Sy*B[1]+Sz*B[2])
 
     def nuclear_zeeman(self,B):
         """Nuclear Zeeman interaction"""
-        I = self.__qm.angular_momentum(self.__ss.I)
+        I = self.__qm.angular_momentum(self.__ss['I'])
         Ix,Iy,Iz = (self.__qm.enlarge_matrix(self.__MJ,I['x']),
                          self.__qm.enlarge_matrix(self.__MJ,I['y']),
                          self.__qm.enlarge_matrix(self.__MJ,I['z']))
-        return self.__un*self.__ss.gI*((Ix*B[0]+Iy*B[1]+Iz*B[2]))
+        return self.__un*self.__ss['gI']*((Ix*B[0]+Iy*B[1]+Iz*B[2]))
     
     def hyperfine(self):
         """Hyperfine interaction"""
-        S = self.__qm.angular_momentum(self.__ss.J)
-        I = self.__qm.angular_momentum(self.__ss.I)
-        return self.__h * self.__ss.A * (np.kron(S['x'],I['x']) + 
+        S = self.__qm.angular_momentum(self.__ss['J'])
+        I = self.__qm.angular_momentum(self.__ss['I'])
+        return self.__h * self.__ss['A'] * (np.kron(S['x'],I['x']) + 
                 np.kron(S['y'],I['y']) + np.kron(S['z'],I['z']))
 
     def get_hamiltonian(self,B):
