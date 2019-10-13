@@ -1,0 +1,17 @@
+DEBUG 2019-10-11 18:17:53,885 - This is a harmless debug message.
+DEBUG 2019-10-11 18:18:12,256 - This is a harmless debug message.
+INFO 2019-10-11 18:18:12,257 - Just some useful info
+WARNING 2019-10-11 18:18:12,257 - I'm sorry, but I can't do that Dave
+ERROR 2019-10-11 18:18:12,257 - Did you just try to divide by zero?
+CRITICAL 2019-10-11 18:18:12,257 - The entire internet is down!
+INFO 2019-10-11 18:18:44,553 - quadratic formula(1, 0, 2)
+DEBUG 2019-10-11 18:18:44,554 - # Compute the discriminant
+DEBUG 2019-10-11 18:18:44,554 - # Compute the two roots
+INFO 2019-10-11 18:20:30,956 - quadratic formula(1, 0, -4)
+DEBUG 2019-10-11 18:20:30,957 - # Compute the discriminant
+DEBUG 2019-10-11 18:20:30,957 - # Compute the two roots
+DEBUG 2019-10-11 18:20:30,957 - # Return the roots"
+ERROR 2019-10-11 23:26:06,771 - Invalid alias: The name clear can't be aliased because it is another magic command.
+ERROR 2019-10-11 23:26:06,772 - Invalid alias: The name more can't be aliased because it is another magic command.
+ERROR 2019-10-11 23:26:06,772 - Invalid alias: The name less can't be aliased because it is another magic command.
+ERROR 2019-10-11 23:26:06,772 - Invalid alias: The name man can't be aliased because it is another magic command.

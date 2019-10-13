@@ -1,0 +1,12 @@
+setup.py
+SpinTools/__init__.py
+SpinTools.egg-info/PKG-INFO
+SpinTools.egg-info/SOURCES.txt
+SpinTools.egg-info/dependency_links.txt
+SpinTools.egg-info/requires.txt
+SpinTools.egg-info/top_level.txt
+SpinTools/qmech/__init__.py
+SpinTools/qmech/qmech.py
+SpinTools/spinhamiltonian/__init__.py
+SpinTools/spinhamiltonian/spinhamiltonian.py
+SpinTools/spinhamiltonian/spinsystems.py
