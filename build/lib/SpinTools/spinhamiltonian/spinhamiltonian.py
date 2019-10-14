@@ -1,6 +1,7 @@
 from scipy.constants import physical_constants as spc
 from SpinTools.qmech import qmech as qm
-from SpinTools.logger import logger
+# from SpinTools.logger import logger
+import Logger
 import numpy as np
 import json
 
@@ -15,12 +16,11 @@ class SpinHamiltonian:
         self.__h = spc["Planck constant"][0]
         
         try:
-            with open('../../species.json', 'r') as f:
-                species_string = f.read()    
-            sp = json.loads(species_string)
+           with open('../../species.json', 'r') as f:
+               species_string = f.read()    
+           sp = json.loads(species_string)
         except FileNotFoundError:
-            "The species json file is not present in the package directory"
-        
+           "The species json file is not present in the package directory"
         self.__ss = sp[species]
         
         self.__MJ = int((self.__ss['J']*2)+1)
@@ -28,8 +28,10 @@ class SpinHamiltonian:
         
         self.__qm = qm.Qmech()
 
-        # self.__logger = logger.Logger().logger('../../spinhamiltonianlog')
-        # print(self.__logger)
+        log = Logger.Logger('../../spinhamiltonianlog')
+        self.__logger = log.get_logger()
+        self.__logger.debug("SpinHamiltonian Constructor called")
+        
         return
     
     def electron_zeeman(self,B):
@@ -37,8 +39,8 @@ class SpinHamiltonian:
         if type(B) not in [list]:
             raise TypeError("B must be a vector")
         
-        if type(B).any() not in [int,float]:
-            raise TypeError("B components must be a float or integer value")
+        # if type(B.any()) not in [int,float]:
+        #     raise TypeError("B components must be a float or integer value")
             
         S = self.__qm.angular_momentum(self.__ss['J'])
         Sx,Sy,Sz = (self.__qm.enlarge_matrix(self.__MI,S['x']),
@@ -52,8 +54,8 @@ class SpinHamiltonian:
         if type(B) not in [list]:
             raise TypeError("B must be a vector")
         
-        if type(B).any() not in [int,float]:
-            raise TypeError("B components must be a float or integer value")
+        # if type(B.any()) not in [int,float]:
+        #     raise TypeError("B components must be a float or integer value")
             
         I = self.__qm.angular_momentum(self.__ss['I'])
         Ix,Iy,Iz = (self.__qm.enlarge_matrix(self.__MJ,I['x']),
@@ -73,8 +75,8 @@ class SpinHamiltonian:
         if type(B) not in [list]:
             raise TypeError("B must be a vector")
         
-        if type(B).any() not in [int,float]:
-            raise TypeError("B components must be a float or integer value")
+        # if type(np.array(B).any()) not in [int,float]:
+        #     raise TypeError("B components must be a float or integer value")
             
         return self.hyperfine() + self.electron_zeeman(B) + self.nuclear_zeeman(B)
 
@@ -96,7 +98,7 @@ class SpinHamiltonian:
     
     def calculate_energy(self,Bz):
         """Calculate the eigenergy"""
-        if type(bmin) not in [int,float]:
+        if type(Bz) not in [np.ndarray,int,float]:
             raise TypeError("B components must be a float or integer value")
             
         H = [self.get_hamiltonian([0,0,Bz[i]]) for i in range(len(Bz))]
