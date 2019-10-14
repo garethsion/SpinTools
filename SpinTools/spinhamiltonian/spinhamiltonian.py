@@ -2,6 +2,7 @@ from scipy.constants import physical_constants as spc
 from SpinTools.qmech import qmech as qm
 # from SpinTools.logger import logger
 import Logger
+import logging
 import numpy as np
 import json
 
@@ -28,10 +29,19 @@ class SpinHamiltonian:
         
         self.__qm = qm.Qmech()
 
-        log = Logger.Logger('../../spinhamiltonianlog')
-        self.__logger = log.get_logger()
-        self.__logger.debug("SpinHamiltonian Constructor called")
+        # log = Logger.Logger('../../spinhamiltonianlog')
+        # self.__logger = log.get_logger()
         
+
+        # Create and configure logger
+        LOG_FORMAT = "%(levelname)s %(asctime)s - %(message)s"
+        logging.basicConfig(filename = "../../logs/" + __name__,
+            level = logging.DEBUG,
+            format = LOG_FORMAT,
+            filemode = 'w')
+        logging.getLogger("matplotlib").setLevel(logging.WARNING)
+        self.__logger = logging.getLogger()
+        self.__logger.debug("SpinHamiltonian Constructor called")
         return
     
     def electron_zeeman(self,B):

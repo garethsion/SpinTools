@@ -1,5 +1,0 @@
-DEBUG 2019-10-14 11:50:56,901 - This is a harmless debug message.
-ERROR 2019-10-14 12:05:17,454 - Invalid alias: The name clear can't be aliased because it is another magic command.
-ERROR 2019-10-14 12:05:17,455 - Invalid alias: The name more can't be aliased because it is another magic command.
-ERROR 2019-10-14 12:05:17,455 - Invalid alias: The name less can't be aliased because it is another magic command.
-ERROR 2019-10-14 12:05:17,455 - Invalid alias: The name man can't be aliased because it is another magic command.
