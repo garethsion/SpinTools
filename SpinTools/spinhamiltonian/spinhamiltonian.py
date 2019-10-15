@@ -9,7 +9,14 @@ import json
 class SpinHamiltonian:
     def __init__(self,species):
         """ Constructor method """
+
+        # # Create and configure logger
+        log = Logger.Logger("../../logs/" + __name__)
+        self.__logger = log.get_logger()
+        self.__logger.info("SpinHamiltonian({0})".format(species))
+
         if type(species) not in [str]:
+            self.__logger.error("Incorrect type {0} passed to constructor".format(species))
             raise TypeError("Species must be a string")
 
         self.__ub = spc["Bohr magneton"][0]
@@ -18,7 +25,9 @@ class SpinHamiltonian:
         
         try:
            with open('../../species.json', 'r') as f:
+               self.__logger.debug("# Species JSON file opened")
                species_string = f.read()    
+               self.__logger.debug("# Species JSON file parsed")
            sp = json.loads(species_string)
         except FileNotFoundError:
            "The species json file is not present in the package directory"
@@ -28,35 +37,28 @@ class SpinHamiltonian:
         self.__MI = int((self.__ss['I']*2)+1)
         
         self.__qm = qm.Qmech()
-
-        # log = Logger.Logger('../../spinhamiltonianlog')
-        # self.__logger = log.get_logger()
         
-
-        # Create and configure logger
-        LOG_FORMAT = "%(levelname)s %(asctime)s - %(message)s"
-        logging.basicConfig(filename = "../../logs/" + __name__,
-            level = logging.DEBUG,
-            format = LOG_FORMAT,
-            filemode = 'w')
-        logging.getLogger("matplotlib").setLevel(logging.WARNING)
-        self.__logger = logging.getLogger()
-        self.__logger.debug("SpinHamiltonian Constructor called")
         return
     
     def electron_zeeman(self,B):
         """Calculate the electron Zeeman interaction"""
+        self.__logger.info('electron_zeeman({0}'.format(B))
+
         if type(B) not in [list]:
+            self.__logger.error("Incorrect type {0} passed to constructor".format(B))
             raise TypeError("B must be a vector")
         
         # if type(B.any()) not in [int,float]:
         #     raise TypeError("B components must be a float or integer value")
             
         S = self.__qm.angular_momentum(self.__ss['J'])
+
+        self.__logger.debug("# Enlarge spin matrices")
         Sx,Sy,Sz = (self.__qm.enlarge_matrix(self.__MI,S['x']),
                          self.__qm.enlarge_matrix(self.__MI,S['y']),
                          self.__qm.enlarge_matrix(self.__MI,S['z']))
 
+        self.__logger.debug("# return zeeman hamiltonian")
         return self.__ub*self.__ss['gS']*(Sx*B[0]+Sy*B[1]+Sz*B[2])
 
     def nuclear_zeeman(self,B):
@@ -115,72 +117,3 @@ class SpinHamiltonian:
         eigval = [np.linalg.eig(H[i])[0] for i in range(len(H))]
 
         return [np.sort(np.real(eigval[i]))/self.__h/1e09 for i in range(len(eigval))]
-
-    def clock_transitions_low_field(E,B, show = False):
-        transition_counter = 0
-        transitions = []
-        transition_energies = []
-        dE = []
-        level0 = []
-        level1 = []
-
-        for j in range (len(E)):
-            dE.append([])
-            level0.append([])
-            level1.append([])
-            for i in range (len(E)):
-                dE[j].append([])
-                level0[j].append([])
-                level1[j].append([])
-                for n in range (len(E[0])):
-                    dE[j][i].append([])
-                    dE[j][i][n]=(E[i][n]-E[j][n])
-                    level0[j][i].append([])
-                    level1[j][i].append([])
-                    level0[j][i][n],level1[j][i][n]=E[i][n],E[j][n]
-
-        for j in range (len(E)):
-            if (j>=len(E)/2):
-                Fj=len(E)/4
-                mFj =j-(3*len(E)/4-1)
-                mIj = mFj-1/2
-                mSj = 1/2
-            else:    
-                Fj=len(E)/4-1    
-                mFj = -j+(len(E)/4-1)
-                mIj = mFj+1/2
-                mSj = -1/2
-            if (j==len(E)/2-1):    
-                Fj=len(E)/4    
-                mFj = -j+(len(E)/4-1)
-
-            #print (mFj)
-            for i in range (len(E)):
-                if (i>=len(E)/2):
-                    Fi=len(E)/4
-                    mFi =i-(3*len(E)/4-1)
-                    mIi = mFi-1/2
-                    mSi = 1/2
-                else:
-                    Fi=len(E)/4-1
-                    mFi = -i+(len(E)/4-1)
-                    mIi = mFi+1/2
-                    mSi = -1/2
-                if (i==len(E)/2-1):
-                    Fi=len(E)/4
-                    mFi = -i+(len(E)/4-1)
-
-                dmF = mFi-mFj
-                dF = Fi-Fj
-                #print (mFi,mFj,(i+1)*(1+j))
-                if (abs(dmF)==1 and dF==-1):
-                    transitions.append([j,i])
-                    peak = signal.argrelmin(np.array(dE[i][j]))
-                    #print (dE[i][j])
-                    transition_energies.append(dE[i][j])
-                    if (len(peak[0])!= 0 and show == True):
-                        print ("Levels: ("+h_int(mSj)+","+h_int(mIj)+") -> ("+h_int(mSi)+","+h_int(mIi)+")\t Field = "+ str(round(B[peak[0][0]]*1000,2))+" mT\tTransition frequency = "+str(round(dE[i][j][peak[0][0]],6))+" GHz, i,j = %i,%i"%(i,j))
-                        print (level1[i][j][peak[0][0]],level0[i][j][peak[0][0]] )
-                        plt.plot((B[peak[0][0]], B[peak[0][0]]), (level1[i][j][peak[0][0]],level0[i][j][peak[0][0]]), '#e65c00')
-
-        return(transitions, transition_energies)
