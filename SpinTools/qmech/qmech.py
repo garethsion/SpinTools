@@ -13,7 +13,7 @@ class Qmech:
         self.__logger.info('angular_momentum({0}'.format(J))
 
         if type(J) not in [int,float]:
-            self.__logger.error("Incorrect type {0} passed to constructor".format(J))
+            self.__logger.error("Incorrect type {0} passed to method".format(J))
             raise TypeError("J must be a non-negative, real, numerical value")
 
         alpha = lambda mz,J : (J*(J+1)-mz*(mz+1))**0.5

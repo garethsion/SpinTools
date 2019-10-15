@@ -1,7 +1,9 @@
 - [x] 2019-10-13 - Replace SpinSystems class with json - import json in the relevant class
 - [ ] 2019-10-13 - Add code for clock transitions - high field and low field selection rules
 - [ ] 2019-10-13 - Add code for calculating populations
-- [ ] 2019-10-13 - Implement logging for each method
+- [x] 2019-10-13 - Implement logging for each method
 - [ ] 2019-10-13 - Add appropriate docstrings for each method
 - [ ] 2019-10-13 - Add unit tests for each method
 - [ ] 2019-10-13 - Clean up files
+-
+- [ ] 2019_10_15 - The logger shows the name 'root' for each class. Change so that iot identifies the approapriate class.
