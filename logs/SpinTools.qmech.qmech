@@ -1,0 +1,13 @@
+root        : INFO 2019-10-15 15:02:25,318 - Qmech() Constructor Called
+root        : INFO 2019-10-15 15:02:25,318 - angular_momentum(0.5
+root        : DEBUG 2019-10-15 15:02:25,318 - # Calculate J+, J-, and Jz 
+root        : DEBUG 2019-10-15 15:02:25,318 - # Calculate Jx and Jy 
+root        : DEBUG 2019-10-15 15:02:25,318 - # Return dictionary of J components 
+root        : INFO 2019-10-15 15:02:25,318 - angular_momentum(4.5
+root        : DEBUG 2019-10-15 15:02:25,318 - # Calculate J+, J-, and Jz 
+root        : DEBUG 2019-10-15 15:02:25,318 - # Calculate Jx and Jy 
+root        : DEBUG 2019-10-15 15:02:25,318 - # Return dictionary of J components 
+root        : ERROR 2019-10-15 15:02:28,357 - Invalid alias: The name clear can't be aliased because it is another magic command.
+root        : ERROR 2019-10-15 15:02:28,357 - Invalid alias: The name more can't be aliased because it is another magic command.
+root        : ERROR 2019-10-15 15:02:28,357 - Invalid alias: The name less can't be aliased because it is another magic command.
+root        : ERROR 2019-10-15 15:02:28,357 - Invalid alias: The name man can't be aliased because it is another magic command.
