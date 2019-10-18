@@ -69,8 +69,6 @@ class SpinHamiltonian:
 
     def get_hamiltonian(self,B):
         """Get the full spin hamiltonian"""
-        self.logger.info('get_hamiltonian({0}'.format(B))
-
         if type(B) not in [list]:
         	raise TypeError("B must be a vector")
         
@@ -84,7 +82,6 @@ class SpinHamiltonian:
         if (type(bx) not in [int,float]) or (type(by) not in [int,float]) or (type(bz) not in [int,float]):
             raise TypeError("B components must be a float or integer value")
         
-        self.logger.debug("# return field vector")
         return [bx, by, bz]
 
     def get_field_sweep(self,bmin=0,bmax=1,bnum=1000):
@@ -134,7 +131,7 @@ class SpinHamiltonian:
 
         eigvec = self.calculate_eigenvectors(Bz)
 
-        H_drive = self.electron_zeeman(B_drive)
+        H_drive = self.electron_zeeman(B_drive) + self.nuclear_zeeman(B_drive)
         length = len(np.squeeze(np.asarray(eigvec[0][0,:])))
 
         for n in range(length):
@@ -143,9 +140,10 @@ class SpinHamiltonian:
                 f = np.squeeze(np.asarray(eigvec[0][:,m]))
                 gamma = 1e24*np.abs(np.matmul(f,np.squeeze(np.asarray(np.matmul(H_drive,i)))))
 
+                # import pdb;pdb.set_trace()
                 if gamma > 0 :
-                    Ef = np.real(eigvec[1][m])/self.h/1E9
-                    Ei = np.real(eigvec[1][n])/self.h/1E9
+                    Ef = np.real(eigvec[0][m])/self.h/1E9
+                    Ei = np.real(eigvec[0][n])/self.h/1E9
                     E=(np.abs(Ef-Ei))
                     # Es.append([E,gamma,Ef,Ei])
                     Es.append([E])
@@ -156,11 +154,10 @@ class SpinHamiltonian:
             #print(Ef,Ei)
 
         import pdb; pdb.set_trace()
-        Es = (np.array(Es))
+        # Es = (np.array(Es))
         # #print(Es[:,1].min())
-        # self.logger.debug('# Sort Es')
         # print(Es)
         # return Es
-        # Es = Es[Es[:,0].argsort()]
-        # self.logger.debug('# return Es')
+        Es = Es[0][0].argsort()
+        return Es
         # return(Es[:,0],Es[:,1],Es[:,2],Es[:,3]) 

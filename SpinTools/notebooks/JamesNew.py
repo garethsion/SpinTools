@@ -174,7 +174,6 @@ def FGR_E_transitions(eigvec,species,A_drive = 1):
     
     #print (H_drive.max,H_drive_magnetic.max)
     length = len(np.squeeze(np.asarray(eigvec[0][0,:])))
-    
     for n in range(length):
         i = np.squeeze(np.asarray(eigvec[0][:,n]))
         for m in range(n+1,len(i)):
@@ -204,10 +203,11 @@ def FGR_transitions(eigvec,species,B_drive = [1,0,0]):
     
     H_drive = Zeeman(species[3],species[2],B_drive,Ixb,Iyb,Izb,Sxb,Syb,Szb)
     length = len(np.squeeze(np.asarray(eigvec[0][0,:])))
-    
+    import pdb; pdb.set_trace()
     for n in range(length):
         i = np.squeeze(np.asarray(eigvec[0][:,n]))
         for m in range(n+1,len(i)):
+            print('{}, {}'.format(n,m))
             f = np.squeeze(np.asarray(eigvec[0][:,m]))
             gamma = 1e24*np.abs(np.matmul(f,np.squeeze(np.asarray(np.matmul(H_drive,i)))))
             
@@ -552,7 +552,7 @@ start_time = time()
 #print(Bmax)
 B_sweep,E,eigenvectors = calc_eigenenergies(species,Bmax,Bmin = 1, points = 1)
 
-#print(B_sweep)
+print(B_sweep)
 
 # plot_E_B(species[0],B_sweep,Bmax,E)
 
