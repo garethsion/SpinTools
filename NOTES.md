@@ -1,0 +1,1 @@
+- [ ] 2019_10_21 - I noticed that there is a discrepancy between my perturbation hamiltonian and James's. Perhaps this is why we get slightly different answers. Investigate why this is.

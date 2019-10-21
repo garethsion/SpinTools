@@ -6,7 +6,7 @@ setup(
         name="SpinTools",
         version="0.1.0",
         packages=find_packages(exclude=['*test','*notebooks']),
-        author="Gareth Sion Jones",
+        author="Gareth Sion Jones, James O'Sullivan",
         author_email="garethsion@googlemail.com",
         python_requires='>3.4.0',
         install_requires=['numpy','scipy', 'pandas', 'scikit-rf','matplotlib']
